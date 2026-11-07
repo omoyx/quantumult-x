@@ -62,5 +62,40 @@ const explicitNodes = explicitOutput.startsWith('shadowsocks=')
   ? explicitOutput : Buffer.from(explicitOutput, 'base64').toString('utf8');
 const explicitTags = explicitNodes.split('\n').map(node => node.split('tag=')[1].trim());
 assert.deepEqual(explicitTags, renamedTags);
+
+// rename replaces a substring; replace can remove the complete tag value.
+// A comma + tag field boundary prevents matching identifiers in credentials,
+// hosts or other connection fields. Word boundaries keep s1 distinct from s10.
+const compactTags = ['🇺🇸 洛杉矶①', '🇺🇸 洛杉矶②', '🇺🇸 洛杉矶③', '🇯🇵 大阪', '🇳🇱 荷兰'];
+const compactFragment = '#replace=' + compactTags.map((name, index) =>
+  `(%2C%5Cs*tag=)[^%2C]*%5Cbc123s${index + 1}%5Cb[^%2C]*@$1${name.replaceAll(' ', '%20')}`
+).join('+');
+assert.ok(fs.readFileSync(`${__dirname}/README.md`, 'utf8').includes(compactFragment),
+  'The published copyable fragment must match the integration fixture');
+const paddedNames = [
+  ...compactTags.map((_, index) => `JMS LA500 - c123s${index + 1}.example.invalid - SS - 1x`),
+  'JMS c123s10 - unknown',
+  'other c999s1 - unchanged',
+];
+const paddedNodes = paddedNames.map((name, index) =>
+  `shadowsocks=c123s1-${index}.example.invalid:1234, method=aes-128-gcm, password=tag=c123s2, tag=${name}, udp-relay=true, fast-open=false`
+).join('\n');
+function native(result) {
+  return result.startsWith('shadowsocks=') ? result : Buffer.from(result, 'base64').toString('utf8');
+}
+const baseline = native(parse('server', paddedNodes, 'https://example.invalid/padded-fixture')).split('\n');
+const compact = native(parse('server', paddedNodes,
+  'https://example.invalid/padded-fixture' + compactFragment)).split('\n');
+const compactActual = compact.map(node => node.match(/(?:^|,\s*)tag=([^,]*)/)[1].trim());
+assert.deepEqual(compactActual, [...compactTags, ...paddedNames.slice(5)]);
+const withoutTag = node => node.replace(/(,\s*tag=)[^,]*/, '$1<name>');
+assert.deepEqual(compact.map(withoutTag), baseline.map(withoutTag));
+assert.equal(compact.length, paddedNames.length);
+for (const node of compact) {
+  assert.match(node, /password=tag=c123s2,/);
+  assert.match(node, /udp-relay=true,/);
+  assert.match(node, /fast-open=false,/);
+}
 process.stdout.write(JSON.stringify({ siri, nodes: 2, renamed_jms_tags: renamedTags,
-  explicit_flag_tags: explicitTags }));
+  explicit_flag_tags: explicitTags, compact_jms_tags: compactActual,
+  compact_connection_fields_unchanged: true }));

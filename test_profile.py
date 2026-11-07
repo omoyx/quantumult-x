@@ -15,12 +15,12 @@ PROFILE = ROOT / "QuantumultX.conf"
 RECEIPT = ROOT / "sources.json"
 
 REGION_EXAMPLES = {
-            "美国自动": ["JMS Los Angeles 01", "奶昔 美国-02", "🇺🇸 US 03", "未来机场 LAX01", "美國 04"],
-            "日本自动": ["奶昔 东京01", "NewProvider JP-02", "🇯🇵 03", "JMS Osaka", "Japan NRT04"],
+            "美国自动": ["JMS Los Angeles 01", "奶昔 美国-02", "🇺🇸 US 03", "未来机场 LAX01", "美國 04", "🇺🇸 洛杉矶①", "🇺🇸 洛杉矶②", "🇺🇸 洛杉矶③"],
+            "日本自动": ["奶昔 东京01", "NewProvider JP-02", "🇯🇵 03", "JMS Osaka", "Japan NRT04", "🇯🇵 大阪"],
             "台湾自动": ["奶昔 台灣 01", "TW-02", "🇹🇼 03", "未来机场 Taipei", "臺北 04"],
             "香港自动": ["奶昔香港01", "NEW HK-02", "🇭🇰 03", "Hong Kong 04", "hkg05"],
             "新加坡自动": ["奶昔 狮城 01", "NEW SG-02", "🇸🇬 03", "Singapore04", "獅城 05"],
-            "欧洲自动": ["JMS London", "DE-Frankfurt 02", "🇳🇱 03", "奶昔法兰克福04", "EU-05", "Paris 06", "英国07", "FI08", "🇨🇭 Zurich"],
+            "欧洲自动": ["JMS London", "DE-Frankfurt 02", "🇳🇱 03", "奶昔法兰克福04", "EU-05", "Paris 06", "英国07", "FI08", "🇨🇭 Zurich", "🇳🇱 荷兰"],
             "韩国自动": ["KR-01", "奶昔 首尔02", "🇰🇷 Seoul"],
             "加拿大自动": ["CA-01", "温哥华02", "🇨🇦 Toronto"],
             "澳大利亚自动": ["AU-01", "🇦🇺 Sydney", "奶昔 澳洲02"],
