@@ -22,6 +22,10 @@ from test_profile import PROFILE, fields, options, read_sections, validate_probe
 ROOT = Path(__file__).resolve().parent
 SIRI = "https://raw.githubusercontent.com/byx020119/Shadowrocket-Siri/main/siri3.list"
 PARSER = "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js"
+ICON_PREFIXES = (
+    "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/",
+    "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/",
+)
 RULE_TYPES = {"host", "host-suffix", "host-keyword", "host-wildcard",
               "ip-cidr", "ip6-cidr", "ip-asn", "user-agent"}
 SIRI_TYPES = {"domain": "host", "domain-suffix": "host-suffix",
@@ -141,7 +145,7 @@ def online_check():
     for line in sections["policy"]:
         name, *parts = fields(line.partition("=")[2])
         url = options(parts).get("img-url")
-        if not url or not url.startswith("https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/"):
+        if not url or not url.startswith(ICON_PREFIXES):
             raise ValueError(f"Missing or unexpected policy icon for {name}")
         icons.append((name, url))
     urls = list(dict.fromkeys([PARSER] + [url for url, _ in resources] + [url for _, url in icons]))

@@ -1,7 +1,7 @@
 {
-  "verified_at": "2026-11-07T19:46:23.846759+00:00",
+  "verified_at": "2026-11-07T20:15:46.219885+00:00",
   "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
-  "profile_sha256": "fcd151bb6932b129e9238d1efdd647673f508fe7c0750c02573c1f76e10c105a",
+  "profile_sha256": "286a5255c20084dfec610385880902a9414ff144e56e74224983c5f0c8dfbe74",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js",
@@ -329,11 +329,11 @@
       "height": 144
     },
     {
-      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Siri.png",
-      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Siri.png",
+      "url": "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/03CNSoft/AppleIntelligence.png",
+      "resolved_url": "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/03CNSoft/AppleIntelligence.png",
       "status": 200,
-      "bytes": 30071,
-      "sha256": "a5fec78e84e95db941a8bf5662f38a3a71c94a7ed6350d9d7478aa6f9c7514c7",
+      "bytes": 23419,
+      "sha256": "c5ac213203ea1f66f05ab63500f9fe3c04119b15803ecde20e6ed9f3399fffe2",
       "policy": "AI",
       "width": 144,
       "height": 144
@@ -369,11 +369,11 @@
       "height": 144
     },
     {
-      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png",
-      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png",
+      "url": "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/04ProxySoft/disney%281%29.png",
+      "resolved_url": "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/04ProxySoft/disney%281%29.png",
       "status": 200,
-      "bytes": 9769,
-      "sha256": "f1505cb0a5d8380a08344ee323c08fa861b3fea53dbd86b1d73ac4a56209cd94",
+      "bytes": 29455,
+      "sha256": "c4023c884bc78ae7550f2e79a4ef48494bb199e8a07088298638be42518ad686",
       "policy": "Disney+",
       "width": 144,
       "height": 144
@@ -409,21 +409,21 @@
       "height": 144
     },
     {
-      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
-      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png",
       "status": 200,
-      "bytes": 4838,
-      "sha256": "89bfe107f21dd109d93f8d58671be06e0ad34a9f672ba96d228c2b3c3b89dfba",
+      "bytes": 4395,
+      "sha256": "6926557c7f122c72830bd936e1f72c13ac670df17d11a3bacdc4fec3e1bfbe13",
       "policy": "Apple",
       "width": 144,
       "height": 144
     },
     {
-      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png",
-      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png",
+      "url": "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/04ProxySoft/google%282%29.png",
+      "resolved_url": "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/04ProxySoft/google%282%29.png",
       "status": 200,
-      "bytes": 5837,
-      "sha256": "0202f62f8faab076d7e2ff823e1bd07973bd5cdafff787cfe245c2c5f0b5484e",
+      "bytes": 24552,
+      "sha256": "82729d46a4c8f8ff577514a9a3c02ae31ac7eadb1247c5f7573bf762bbbc9c0e",
       "policy": "Google",
       "width": 144,
       "height": 144

@@ -21,7 +21,9 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 
 ### 策略图标与已有配置更新
 
-全部 25 个自定义策略指定 [Koolson / Qure Color](https://github.com/Koolson/Qure) 图标：地区用旗帜、欧洲用地图，品牌服务用标志，`AI` 用 Siri 图标，`AI服务` 用彩色 AI 图形。图标由原项目远程提供，保留其署名及使用说明；Qure 作者也推荐 Color 系列用于 QX 自定义策略。
+全部 25 个自定义策略指定图标：地区用旗帜、欧洲用地图，品牌服务用标志。`AI` 使用 [离歌图标库](https://github.com/lige47/lige_icon) 的 Apple Intelligence 图形，Disney+ 使用青绿色版本，Google 使用渐变 G；这三张固定引用已检查的上游提交 `e28d76f`，避免上游替换同名图片影响本配置。Apple 改用简洁灰色标志，其余沿用 [Koolson / Qure Color](https://github.com/Koolson/Qure)。图标由原项目远程提供并保留来源署名。
+
+品牌样式参考 [Disney+ 2024 品牌更新](https://press.disneyplus.com/about/disney-plus-logo-2024)和 [Google 渐变 G 官方说明](https://blog.google/company-news/inside-google/company-announcements/gradient-g-logo-design/)。
 
 已经加过私人订阅时，在本地配置编辑器中，仅用本仓库配置的 `[policy]` 段替换对应段：从 `[policy]` 复制到下一个 `[server_remote]` 之前，保留本机 `[server_remote]` 及其他段落。不要为换图标整份覆盖配置。若自己改过策略内容，只给同名策略行追加相应的 `img-url=...`。圈 X 内各策略当前选中的出口仍需核对，特别是原先有效的 `AI` 出口。
 
@@ -142,6 +144,7 @@ python3 -B validate.py --online --report online-report.json
 | [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/QuantumultX) | QX 原生服务与国内规则 |
 | [KOP-XIAO/QuantumultX](https://github.com/KOP-XIAO/QuantumultX) | 在圈 X 内转换受支持的订阅和 Siri 规则 |
 | [Koolson / Qure](https://github.com/Koolson/Qure) | Qure Color 策略图标，远程引用并保留来源署名 |
+| [lige47 / lige_icon](https://github.com/lige47/lige_icon) | Apple Intelligence、青绿色 Disney+、渐变 Google G；远程引用固定提交并注明出处 |
 | [byx020119/Shadowrocket-Siri](https://github.com/byx020119/Shadowrocket-Siri) | Siri / Apple Intelligence 兼容规则 |
 
 来源保持各自的许可与署名；本仓库没有复制社区整份配置、重写脚本或证书。公开源校验快照见 [sources.json](sources.json)。
