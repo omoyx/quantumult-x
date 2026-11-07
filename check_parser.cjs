@@ -74,6 +74,7 @@ assert.ok(fs.readFileSync(`${__dirname}/README.md`, 'utf8').includes(compactFrag
   'The published copyable fragment must match the integration fixture');
 const paddedNames = [
   ...compactTags.map((_, index) => `JMS LA500 - c123s${index + 1}.example.invalid - SS - 1x`),
+  'JMS-1234567@c123s801.example.invalid:443',
   'JMS c123s10 - unknown',
   'other c999s1 - unchanged',
 ];
@@ -96,6 +97,17 @@ for (const node of compact) {
   assert.match(node, /udp-relay=true,/);
   assert.match(node, /fast-open=false,/);
 }
+
+// The optional s801 mapping labels a purpose without inventing geography or a
+// current traffic multiplier. The five-node fragment alone leaves it unchanged.
+const downloadSuffix = '+(%2C%5Cs*tag=)[^%2C]*%5Cbc123s801%5Cb[^%2C]*@$1📥%20下载';
+assert.ok(fs.readFileSync(`${__dirname}/README.md`, 'utf8').includes(downloadSuffix));
+const download = native(parse('server', paddedNodes,
+  'https://example.invalid/download-fixture' + compactFragment + downloadSuffix)).split('\n');
+const downloadTags = download.map(node => node.match(/(?:^|,\s*)tag=([^,]*)/)[1].trim());
+assert.deepEqual(downloadTags, [...compactTags, '📥 下载', ...paddedNames.slice(6)]);
+assert.deepEqual(download.map(withoutTag), baseline.map(withoutTag));
 process.stdout.write(JSON.stringify({ siri, nodes: 2, renamed_jms_tags: renamedTags,
   explicit_flag_tags: explicitTags, compact_jms_tags: compactActual,
-  compact_connection_fields_unchanged: true }));
+  compact_connection_fields_unchanged: true, download_jms_tags: downloadTags,
+  download_connection_fields_unchanged: true }));

@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-11-07T19:18:20.501195+00:00",
+  "verified_at": "2026-11-07T19:32:28.893957+00:00",
   "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
   "profile_sha256": "fbff95b5db3e01ff68d9a301beb821abefe6b8360f623416f77de92ad9073c8a",
   "sources": [
@@ -507,10 +507,22 @@
       "🇺🇸 洛杉矶③",
       "🇯🇵 大阪",
       "🇳🇱 荷兰",
+      "JMS-1234567@c123s801.example.invalid:443",
       "JMS c123s10 - unknown",
       "other c999s1 - unchanged"
     ],
-    "compact_connection_fields_unchanged": true
+    "compact_connection_fields_unchanged": true,
+    "fictional_jms_download_tags": [
+      "🇺🇸 洛杉矶①",
+      "🇺🇸 洛杉矶②",
+      "🇺🇸 洛杉矶③",
+      "🇯🇵 大阪",
+      "🇳🇱 荷兰",
+      "📥 下载",
+      "JMS c123s10 - unknown",
+      "other c999s1 - unchanged"
+    ],
+    "download_connection_fields_unchanged": true
   },
   "benchmark": {
     "url": "http://cp.cloudflare.com/generate_204",

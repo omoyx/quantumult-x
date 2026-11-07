@@ -25,7 +25,7 @@ REGION_EXAMPLES = {
             "加拿大自动": ["CA-01", "温哥华02", "🇨🇦 Toronto"],
             "澳大利亚自动": ["AU-01", "🇦🇺 Sydney", "奶昔 澳洲02"],
         }
-UNKNOWN_NAMES = ("c123s4", "JMS-01", "奶昔节点02", "BUS-01", "project-jpg", "未来机场 印度01", "Brasil 02")
+UNKNOWN_NAMES = ("c123s4", "JMS-01", "奶昔节点02", "BUS-01", "project-jpg", "未来机场 印度01", "Brasil 02", "📥 下载")
 METADATA_NAMES = ("剩余流量 50GB", "套餐到期 2027-01-01", "US 官网通知", "香港维护",
                   "Traffic: 100 GB", "Japan Expire: 2027", "Subscription update")
 

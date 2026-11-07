@@ -124,7 +124,9 @@ def check_parser(parser, siri, expected):
             "fictional_jms_renamed_tags": parsed["renamed_jms_tags"],
             "fictional_jms_explicit_flag_tags": parsed["explicit_flag_tags"],
             "fictional_jms_compact_tags": parsed["compact_jms_tags"],
-            "compact_connection_fields_unchanged": parsed["compact_connection_fields_unchanged"]}
+            "compact_connection_fields_unchanged": parsed["compact_connection_fields_unchanged"],
+            "fictional_jms_download_tags": parsed["download_jms_tags"],
+            "download_connection_fields_unchanged": parsed["download_connection_fields_unchanged"]}
 
 
 def online_check():

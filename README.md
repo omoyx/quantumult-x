@@ -83,6 +83,18 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 
 `@` 和 `+` 是解析器的字面分隔符，不能整体编码成 `%40`／`%2B`；`%2C`、`%5C`、`%20` 分别是表达式中的逗号、反斜线和名称空格，`$1` 保留名称字段开头。公开解析器已用虚构节点验证前后缀清理、国旗首位、未匹配节点及连接字段不变；这不能替代设备上的实际显示和节点连通性验收。
 
+#### s801：按用途标为下载
+
+[JMS 官方目录](https://www.justmysocks.net/members/index.php?rp=/knowledgebase/1/General)将 `s801` 列为 Freedom server，说明可用流量取决于当前倍率。[详细条目](https://www.justmysocks.net/members/index.php?rp=/knowledgebase/13/What-is-Freedom-server-s801.html)在 2026-11-08 的未登录访问中要求登录，因此这里不声称核实了当前账户倍率、出口国家或质量／在线率条款。若后台显示 Freedom ×10，按十倍可用流量理解，实际下载 20 GB 对应约 2 GB 套餐用量；这是条件示例，不是当前倍率或速度承诺。
+
+可把下面这一段直接接到上面 `#replace=...` 的最末尾，同样将 `c123` 换成自己的节点编号。不要再加一个 `#replace=`：
+
+```text
++(%2C%5Cs*tag=)[^%2C]*%5Cbc123s801%5Cb[^%2C]*@$1📥%20下载
+```
+
+完整名称会变为 `📥 下载`。它不写死倍率或国家，也不会仅靠名称进入美国自动组；**当前仍会进入全球自动和手动节点**。改名不会使流量自动专用于下载，也不会把节点排除出全球自动。下载时可以手选，实际速度需测试；日常 AI／Siri 建议沿用已验证的出口。
+
 ## Siri 与规则更新
 
 沿用 [Shadowrocket-Siri 的 siri3.list](https://github.com/byx020119/Shadowrocket-Siri/blob/main/siri3.list) 和 `AI` 策略。保留 32 条 QX 原生本地快照，优先于普通 Apple、Google、国内 IP 规则；同一来源的远程规则继续接收新增。该来源也覆盖 Private Relay、Maps 和指标域名，这里保留兼容行为，不宣称这些域名都是 Siri 的最小必要集合。上游删除规则时，维护者需要同步本地快照；检查程序会提示差异。
@@ -107,7 +119,7 @@ python3 -B validate.py --online --report online-report.json
 
 联网检查需要 Node.js；macOS 上还会用系统 Swift / Foundation 验证 ICU 正则。GitHub Actions 在每次变更和每天运行上述检查，不需要机场订阅。
 
-本仓库检查配置结构、策略引用、62 个节点名称样例、公开资源完整性、Siri 快照以及典型域名的顺序匹配。域名模型不模拟 QX 的 DNS、ASN、HTTPS User-Agent 可见性或实际出口。用户已实测反馈 GitHub 远程关联无法添加订阅，因此使用方式已明确为下载到本地。**尚未完成本地配置添加订阅、用户节点连通性和服务解锁验收。** 确认本地导入无误、节点入组、实际请求规则与出口正确之后，才能判断特定网络的日常可用性。
+本仓库检查配置结构、策略引用、63 个节点名称样例、公开资源完整性、Siri 快照以及典型域名的顺序匹配。域名模型不模拟 QX 的 DNS、ASN、HTTPS User-Agent 可见性或实际出口。用户已实测反馈 GitHub 远程关联无法添加订阅，因此使用方式已明确为下载到本地。**尚未完成本地配置添加订阅、用户节点连通性和服务解锁验收。** 确认本地导入无误、节点入组、实际请求规则与出口正确之后，才能判断特定网络的日常可用性。
 
 ## 参考来源
 
