@@ -19,6 +19,14 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 
 后续添加或刷新订阅，地区组按节点名称自动纳入，无需改主配置或填写机场名。
 
+### 策略图标与已有配置更新
+
+全部 25 个自定义策略指定 [Koolson / Qure Color](https://github.com/Koolson/Qure) 图标：地区用旗帜、欧洲用地图，品牌服务用标志，`AI` 用 Siri 图标，`AI服务` 用彩色 AI 图形。图标由原项目远程提供，保留其署名及使用说明；Qure 作者也推荐 Color 系列用于 QX 自定义策略。
+
+已经加过私人订阅时，在本地配置编辑器中，仅用本仓库配置的 `[policy]` 段替换对应段：从 `[policy]` 复制到下一个 `[server_remote]` 之前，保留本机 `[server_remote]` 及其他段落。不要为换图标整份覆盖配置。若自己改过策略内容，只给同名策略行追加相应的 `img-url=...`。圈 X 内各策略当前选中的出口仍需核对，特别是原先有效的 `AI` 出口。
+
+图标链接使用 QX 官方支持的 `img-url`，在线检查会核验图片响应、PNG 格式及尺寸；图片可用不代表已完成用户设备上的显示验收。策略名称、候选、地区正则和测速参数与换图标前一致。
+
 ### 已经关联 GitHub 配置，无法添加订阅
 
 1. 保存原有可用配置；若其中已有自己的订阅，先在本机备份，记下 `AI` 的有效出口。
@@ -111,7 +119,7 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 python3 -B validate.py
 ```
 
-联网复核公开源、Siri 转换、虚构 SS 节点解析、JMS 编号节点重命名及完整短名替换、连接字段保持，以及典型服务分流：
+联网复核公开源、25 个策略图标的 PNG 与尺寸、Siri 转换、虚构 SS 节点解析、JMS 编号节点重命名及完整短名替换、连接字段保持，以及典型服务分流：
 
 ```sh
 python3 -B validate.py --online --report online-report.json
@@ -133,6 +141,7 @@ python3 -B validate.py --online --report online-report.json
 | [墨鱼配置](https://ddgksf2013.top/Profile/QuantumultX.conf) | 地区正则延时策略、关闭匹配优化及专用服务顺序 |
 | [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/QuantumultX) | QX 原生服务与国内规则 |
 | [KOP-XIAO/QuantumultX](https://github.com/KOP-XIAO/QuantumultX) | 在圈 X 内转换受支持的订阅和 Siri 规则 |
+| [Koolson / Qure](https://github.com/Koolson/Qure) | Qure Color 策略图标，远程引用并保留来源署名 |
 | [byx020119/Shadowrocket-Siri](https://github.com/byx020119/Shadowrocket-Siri) | Siri / Apple Intelligence 兼容规则 |
 
 来源保持各自的许可与署名；本仓库没有复制社区整份配置、重写脚本或证书。公开源校验快照见 [sources.json](sources.json)。

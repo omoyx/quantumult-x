@@ -12,6 +12,7 @@ import ipaddress
 import json
 from pathlib import Path
 import shutil
+import struct
 import subprocess
 import sys
 from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
@@ -136,13 +137,28 @@ def online_check():
         url, *parts = fields(line)
         if url.startswith("https://"):
             resources.append((url, options(parts)))
-    urls = [PARSER] + [url for url, _ in resources]
+    icons = []
+    for line in sections["policy"]:
+        name, *parts = fields(line.partition("=")[2])
+        url = options(parts).get("img-url")
+        if not url or not url.startswith("https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/"):
+            raise ValueError(f"Missing or unexpected policy icon for {name}")
+        icons.append((name, url))
+    urls = list(dict.fromkeys([PARSER] + [url for url, _ in resources] + [url for _, url in icons]))
     with ThreadPoolExecutor(max_workers=6) as pool:
         fetched = dict(zip(urls, pool.map(fetch, urls)))
     receipt = {"verified_at": datetime.now(timezone.utc).isoformat(),
                "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
                "profile_sha256": hashlib.sha256(PROFILE.read_bytes()).hexdigest(),
-               "sources": [], "domain_probes": []}
+               "sources": [], "policy_icons": [], "domain_probes": []}
+    for name, url in icons:
+        content, source = fetched[url]
+        if not content.startswith(b"\x89PNG\r\n\x1a\n") or content[12:16] != b"IHDR":
+            raise ValueError(f"Policy icon is not a PNG: {name}")
+        width, height = struct.unpack(">II", content[16:24])
+        if width != height or not 32 <= width <= 2048:
+            raise ValueError(f"Unexpected policy icon dimensions: {name}")
+        receipt["policy_icons"].append(dict(source, policy=name, width=width, height=height))
     local = []
     fallback = None
     for line in sections["filter_local"]:
@@ -199,7 +215,8 @@ def main():
         receipt = online_check()
         if args.report:
             args.report.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n")
-        print(f"PASS: {len(receipt['sources'])} public sources; {len(PROBES)} domain probes; KOP parser; HEAD 204")
+        print(f"PASS: {len(receipt['sources'])} public sources; {len(receipt['policy_icons'])} policy PNGs; "
+              f"{len(PROBES)} domain probes; KOP parser; HEAD 204")
     elif args.report:
         parser.error("--report requires --online")
 

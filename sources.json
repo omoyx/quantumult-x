@@ -1,7 +1,7 @@
 {
-  "verified_at": "2026-11-07T19:32:28.893957+00:00",
+  "verified_at": "2026-11-07T19:46:23.846759+00:00",
   "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
-  "profile_sha256": "fbff95b5db3e01ff68d9a301beb821abefe6b8360f623416f77de92ad9073c8a",
+  "profile_sha256": "fcd151bb6932b129e9238d1efdd647673f508fe7c0750c02573c1f76e10c105a",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js",
@@ -315,6 +315,258 @@
         "ip6-cidr",
         "user-agent"
       ]
+    }
+  ],
+  "policy_icons": [
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png",
+      "status": 200,
+      "bytes": 12999,
+      "sha256": "56f5e40b72a4279c12e3577f996a2fa003c9adafc86a66ed9a38c1ec60aa6bc4",
+      "policy": "默认代理",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Siri.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Siri.png",
+      "status": 200,
+      "bytes": 30071,
+      "sha256": "a5fec78e84e95db941a8bf5662f38a3a71c94a7ed6350d9d7478aa6f9c7514c7",
+      "policy": "AI",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png",
+      "status": 200,
+      "bytes": 9818,
+      "sha256": "dea91e9e528c7f32e7bb7c4d390be6a0b8b65a89ff9d6d5e764e2c318201f98f",
+      "policy": "AI服务",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png",
+      "status": 200,
+      "bytes": 11756,
+      "sha256": "3261a724cb6b8662ec170ea360f3739cacd1f09125cb54f764517b81f87c1d9e",
+      "policy": "流媒体",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png",
+      "status": 200,
+      "bytes": 3875,
+      "sha256": "a190c314b964c6e2efb6a00028ee4c2b28159f16d2280189d8a97a3cdc9e62a0",
+      "policy": "Netflix",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png",
+      "status": 200,
+      "bytes": 9769,
+      "sha256": "f1505cb0a5d8380a08344ee323c08fa861b3fea53dbd86b1d73ac4a56209cd94",
+      "policy": "Disney+",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png",
+      "status": 200,
+      "bytes": 9092,
+      "sha256": "1ff428e8f81e5b959cd7a1181f9f7279315e5d04de3b052886fc60834c28529d",
+      "policy": "YouTube",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png",
+      "status": 200,
+      "bytes": 17767,
+      "sha256": "af656084c22d2409c989b20c89a4526af114aeb55b0e3b97484a40feff304ffb",
+      "policy": "Spotify",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png",
+      "status": 200,
+      "bytes": 14268,
+      "sha256": "4a80298ad9b0f01e62c935d54ae9b9a9b0ccab9ec077eaf50c519652e3d87e94",
+      "policy": "巴哈姆特",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
+      "status": 200,
+      "bytes": 4838,
+      "sha256": "89bfe107f21dd109d93f8d58671be06e0ad34a9f672ba96d228c2b3c3b89dfba",
+      "policy": "Apple",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png",
+      "status": 200,
+      "bytes": 5837,
+      "sha256": "0202f62f8faab076d7e2ff823e1bd07973bd5cdafff787cfe245c2c5f0b5484e",
+      "policy": "Google",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png",
+      "status": 200,
+      "bytes": 1243,
+      "sha256": "31eb37edea6b63e72e0e7af7893b32a53f2df8c78d2edfb3fdfc02376b2b0bcf",
+      "policy": "Microsoft",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png",
+      "status": 200,
+      "bytes": 13559,
+      "sha256": "1af4c3abe4f3be8f1fa1677302aa40e7fb509b89707fbd79f07d209c36ba970e",
+      "policy": "Telegram",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png",
+      "status": 200,
+      "bytes": 11353,
+      "sha256": "2f5e1d63526c34b4a26194bf07c554d35b98b25bbfaa988611d6ecb77e3f511f",
+      "policy": "兜底",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png",
+      "status": 200,
+      "bytes": 13045,
+      "sha256": "0338f9c7e185e24bdc41bc55b7ee8c5cbb7dafb041d7a6addcef2884b85e73d3",
+      "policy": "全球自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png",
+      "status": 200,
+      "bytes": 12522,
+      "sha256": "63d7c028ea38626029cc968ff93ee63eee6672fab1750ccbda1ad1eabebc5f5a",
+      "policy": "美国自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png",
+      "status": 200,
+      "bytes": 8754,
+      "sha256": "59e351aab014850cd4b2a26fd17ce6a993649fffb44d8956c6635838432e0d82",
+      "policy": "日本自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png",
+      "status": 200,
+      "bytes": 10667,
+      "sha256": "c40a38fdba600cffe8471ada64b294744211f233a650140650c67bd26b4b0e37",
+      "policy": "台湾自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png",
+      "status": 200,
+      "bytes": 11854,
+      "sha256": "eacee82c61b21e7a926b4f393403bf8f783b3109352b7dbd20b6ffd9c0d742c2",
+      "policy": "香港自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png",
+      "status": 200,
+      "bytes": 9416,
+      "sha256": "192249f40299813067a960ad964093a6dbfa965e2509d0b4ddf920eb4a1441cd",
+      "policy": "新加坡自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Europe_Map.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Europe_Map.png",
+      "status": 200,
+      "bytes": 13376,
+      "sha256": "1658bea238f9be07f0b289852bde9f724d09d716346e77d8a41931fd869c5f26",
+      "policy": "欧洲自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png",
+      "status": 200,
+      "bytes": 10961,
+      "sha256": "2612736989c0932b9d9057111f00b704aa1f146efcaa2ca853bade05d3f967ab",
+      "policy": "韩国自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png",
+      "status": 200,
+      "bytes": 10893,
+      "sha256": "1812eb168ac231c6f13470f9bfe396011fe78cf3c3ce0100fb80251e7ccfe81b",
+      "policy": "加拿大自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png",
+      "status": 200,
+      "bytes": 16392,
+      "sha256": "bcec393a98ad86f2102ad01ffd726bc8f2ba8e974751ec1bc0ed69fc24663e9e",
+      "policy": "澳大利亚自动",
+      "width": 144,
+      "height": 144
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Static.png",
+      "resolved_url": "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Static.png",
+      "status": 200,
+      "bytes": 10457,
+      "sha256": "e1321ecbe329213d3c647fb9ba70aa9a6b21f7aeeff7f97d4280f789dc9afc99",
+      "policy": "手动节点",
+      "width": 144,
+      "height": 144
     }
   ],
   "domain_probes": [
