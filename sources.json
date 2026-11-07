@@ -1,7 +1,7 @@
 {
-  "verified_at": "2026-11-07T17:51:44.493384+00:00",
+  "verified_at": "2026-11-07T18:11:08.207600+00:00",
   "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
-  "profile_sha256": "812f71e425329d45621c79ee8c2760141232677e85fc120355415100a86c9fbf",
+  "profile_sha256": "7a0b7edb21ffc31d6bafbdef775f3161b13d11ef0b49c982d9e1e5ef91c0c588",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js",
@@ -489,7 +489,7 @@
     "fictional_ss_nodes": 2
   },
   "benchmark": {
-    "url": "https://cp.cloudflare.com/generate_204",
+    "url": "http://cp.cloudflare.com/generate_204",
     "method": "HEAD",
     "status": 204,
     "scope": "Current host connection only; no user nodes tested"

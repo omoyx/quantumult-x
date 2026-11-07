@@ -54,6 +54,17 @@ def options(parts):
     return dict(part.split("=", 1) for part in parts if "=" in part)
 
 
+def validate_probe_url(value):
+    """Use plain HTTP for QX probe URL compatibility, independent of reachability."""
+    parsed = urlsplit(value)
+    if (parsed.scheme != "http" or not parsed.hostname
+            or parsed.username is not None or parsed.password is not None
+            or parsed.fragment or any(char.isspace() for char in value)
+            or (parsed.port is not None and not 1 <= parsed.port <= 65535)):
+        raise ValueError("QX check URLs must be complete plain HTTP URLs without credentials or whitespace")
+    return value
+
+
 class QuantumultProfileTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -75,6 +86,15 @@ class QuantumultProfileTests(unittest.TestCase):
             for line in cls.sections["filter_remote"]
         }
         cls.receipt = json.loads(RECEIPT.read_text())
+
+    def test_probe_urls_use_qx_compatible_http(self):
+        general = {key.strip(): value.strip() for key, value in options(self.sections["general"]).items()}
+        for key in ("server_check_url", "network_check_url"):
+            self.assertEqual(validate_probe_url(general[key]), general[key])
+        for value in ("https://cp.cloudflare.com/generate_204", "http:///generate_204",
+                      "http://cp.cloudflare.com/\ngenerate_204", "http://user:pass@example.com/check"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                validate_probe_url(value)
 
     def test_profile_contains_no_subscriptions_nodes_or_interception(self):
         self.assertEqual(set(self.sections), {

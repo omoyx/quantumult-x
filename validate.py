@@ -14,9 +14,9 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
-from test_profile import PROFILE, fields, options, read_sections
+from test_profile import PROFILE, fields, options, read_sections, validate_probe_url
 
 ROOT = Path(__file__).resolve().parent
 SIRI = "https://raw.githubusercontent.com/byx020119/Shadowrocket-Siri/main/siri3.list"
@@ -169,8 +169,12 @@ def online_check():
         if actual != expected:
             raise ValueError(f"Routing regression for {domain}: expected {expected}, got {actual}")
     receipt["parser_check"] = check_parser(fetched[PARSER][0].decode(), fetched[SIRI][0].decode(), siri_rules)
-    endpoint = "https://cp.cloudflare.com/generate_204"
-    with urlopen(Request(endpoint, method="HEAD"), timeout=30) as response:
+    general = {key.strip(): value.strip() for key, value in options(sections["general"]).items()}
+    endpoint = validate_probe_url(general["server_check_url"])
+    class NoRedirect(HTTPRedirectHandler):
+        def redirect_request(self, *args, **kwargs):
+            return None
+    with build_opener(NoRedirect).open(Request(endpoint, method="HEAD"), timeout=30) as response:
         if response.status != 204 or response.url != endpoint:
             raise ValueError("Latency endpoint no longer returns 204 without redirect")
         receipt["benchmark"] = {"url": endpoint, "method": "HEAD", "status": response.status,

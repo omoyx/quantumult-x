@@ -35,6 +35,8 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 
 自动组使用 `url-latency-benchmark`，活跃时每 600 秒检测，延时改善达到约 50 ms 才换节点，空闲时不持续检测。延时测试不验证带宽、实际国家、AI 或流媒体解锁；自动切换可能更换出口 IP。
 
+测速参数采用 `server_check_url = http://cp.cloudflare.com/generate_204`。该参数保持 HTTP，以兼容会拒绝 HTTPS 检测网址的 QX 版本；配置下载地址和远程规则仍使用 HTTPS。如果旧版本在第 11 行提示 `malformed server check URL`，将测速这一行的 `https://` 改成 `http://`。网址在浏览器中能访问，不代表圈 X 的配置解析器接受它。
+
 名称支持中英文地名、城市、缩写和旗帜，例如 `🇯🇵 Tokyo`、`HK-01`、`JMS Los Angeles`。纯编号 `c123s4`、`JMS-01` 无法可靠推断国家，会保留在全球自动和手动节点；这类节点可在圈 X 内加真实地区别名。中转与落地同时出现在名称中可能匹配多个地区。订阅重名节点可加机场前缀区分，但不要给一个多地区订阅统一加国家前缀。
 
 没有节点的地区组会为空，没有跨地区回退；当前 QX 的空组行为未实机核验，不能把空组当成阻断保证。首次使用先检查所选组有候选。
