@@ -33,4 +33,22 @@ const nodes = nodeOutput.startsWith('shadowsocks=')
 assert.equal(nodes.split('\n').length, 2);
 assert.match(nodes, /tag=US-test/);
 assert.match(nodes, /tag=JP-test/);
-process.stdout.write(JSON.stringify({ siri, nodes: 2 }));
+
+// Numbered JMS-style names need user-supplied geography. These are fixtures,
+// not a country lookup for a real JMS plan or subscription.
+const numberedNames = ['LA-1 洛杉矶', 'LA-2 洛杉矶', 'LA-GIA 洛杉矶', 'Osaka 大阪', 'NL 荷兰'];
+const numbered = numberedNames.map((_, index) =>
+  `shadowsocks=192.0.2.${index + 20}:1234, method=aes-128-gcm, password=example-password, tag=c123s${index + 1}`
+).join('\n');
+// Encode only field values; @ and + are parser syntax and stay literal.
+const fragment = '#rename=' + numberedNames.map((name, index) =>
+  `c123s${index + 1}@${encodeURIComponent(name)}`
+).join('+') + '&emoji=1';
+const renamedOutput = parse('server', numbered, 'https://example.invalid/numbered-fixture' + fragment);
+const renamed = renamedOutput.startsWith('shadowsocks=')
+  ? renamedOutput : Buffer.from(renamedOutput, 'base64').toString('utf8');
+const renamedTags = renamed.split('\n').map(node => node.split('tag=')[1].trim());
+assert.deepEqual(renamedTags, numberedNames.map((name, index) =>
+  `${['🇺🇸', '🇺🇸', '🇺🇸', '🇯🇵', '🇳🇱'][index]} ${name}`
+));
+process.stdout.write(JSON.stringify({ siri, nodes: 2, renamed_jms_tags: renamedTags }));

@@ -57,6 +57,18 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 
 没有节点的地区组会为空，没有跨地区回退；当前 QX 的空组行为未实机核验，不能把空组当成阻断保证。首次使用先检查所选组有候选。
 
+### JMS 编号节点重命名与海盗旗
+
+先按自己的实际出口填写地区别名，在该订阅的资源路径末尾添加参数，并开启该资源的「资源解析」。以下仅演示 `c123s1` 到 `c123s5` 分别对应洛杉矶、洛杉矶、洛杉矶、大阪、荷兰时的写法；编号与地区并非所有 JMS 套餐通用。
+
+```text
+#rename=c123s1@LA-1%20洛杉矶+c123s2@LA-2%20洛杉矶+c123s3@LA-GIA%20洛杉矶+c123s4@Osaka%20大阪+c123s5@NL%20荷兰&emoji=1
+```
+
+`@` 分开旧名和新名，`+` 分开多项映射，必须保留这两个字面分隔符；空格等名称内容才编码。把分隔符写成 `%40`、`%2B` 会导致映射不生效，纯编号无法识别地区时，KOP 的 `emoji=1` 就会加上海盗旗。以上示例解析结果为三项 `🇺🇸`、一项 `🇯🇵`、一项 `🇳🇱`，分别进入美国、日本、欧洲自动组。修改后更新该节点资源即可，无需重新下载主配置。
+
+[KOP 解析器源码](https://github.com/KOP-XIAO/QuantumultX/blob/master/Scripts/resource-parser.js)先按字面的 `+`、`@` 拆分，再解码名称字段。当前实现先重命名再添加国旗；头部关于 `rename`／`rrname` 顺序的旧说明与实现不一致，联网检查以实际解析输出为准。
+
 ## Siri 与规则更新
 
 沿用 [Shadowrocket-Siri 的 siri3.list](https://github.com/byx020119/Shadowrocket-Siri/blob/main/siri3.list) 和 `AI` 策略。保留 32 条 QX 原生本地快照，优先于普通 Apple、Google、国内 IP 规则；同一来源的远程规则继续接收新增。该来源也覆盖 Private Relay、Maps 和指标域名，这里保留兼容行为，不宣称这些域名都是 Siri 的最小必要集合。上游删除规则时，维护者需要同步本地快照；检查程序会提示差异。
@@ -73,7 +85,7 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 python3 -B validate.py
 ```
 
-联网复核公开源、Siri 转换、虚构 SS 节点解析和典型服务分流：
+联网复核公开源、Siri 转换、虚构 SS 节点解析、5 个虚构 JMS 编号节点的重命名和旗帜，以及典型服务分流：
 
 ```sh
 python3 -B validate.py --online --report online-report.json

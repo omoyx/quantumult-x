@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-11-07T18:45:12.975409+00:00",
+  "verified_at": "2026-11-07T19:03:30.282040+00:00",
   "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
   "profile_sha256": "fbff95b5db3e01ff68d9a301beb821abefe6b8360f623416f77de92ad9073c8a",
   "sources": [
@@ -486,7 +486,14 @@
   ],
   "parser_check": {
     "siri_rules": 32,
-    "fictional_ss_nodes": 2
+    "fictional_ss_nodes": 2,
+    "fictional_jms_renamed_tags": [
+      "🇺🇸 LA-1 洛杉矶",
+      "🇺🇸 LA-2 洛杉矶",
+      "🇺🇸 LA-GIA 洛杉矶",
+      "🇯🇵 Osaka 大阪",
+      "🇳🇱 NL 荷兰"
+    ]
   },
   "benchmark": {
     "url": "http://cp.cloudflare.com/generate_204",
