@@ -1,0 +1,527 @@
+{
+  "verified_at": "2026-11-07T17:51:44.493384+00:00",
+  "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
+  "profile_sha256": "812f71e425329d45621c79ee8c2760141232677e85fc120355415100a86c9fbf",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js",
+      "resolved_url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js",
+      "status": 200,
+      "bytes": 271817,
+      "sha256": "591852421bd935b4642a7af0f9a8c849fddf9ea7f4abd4326ea91d3f36e9acf2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/byx020119/Shadowrocket-Siri/main/siri3.list",
+      "resolved_url": "https://raw.githubusercontent.com/byx020119/Shadowrocket-Siri/main/siri3.list",
+      "status": 200,
+      "bytes": 1213,
+      "sha256": "0865283eb9d1d083a71f905d89820dc2f651246a6db27bb10ede333bb18bbca1",
+      "rule_count": 32,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix"
+      ],
+      "native_snapshot": [
+        "host, guzzoni.apple.com, AI",
+        "host-suffix, smoot.apple.com, AI",
+        "host, apple-relay.apple.com, AI",
+        "host-suffix, apple-relay.apple.com, AI",
+        "host, apple-relay.cloudflare.com, AI",
+        "host-suffix, apple-relay.cloudflare.com, AI",
+        "host, apple-relay.fastly-edge.com, AI",
+        "host-suffix, apple-relay.fastly-edge.com, AI",
+        "host, cp4.cloudflare.com, AI",
+        "host, apple-relay.mask.apple-dns.net, AI",
+        "host-suffix, apple-relay.mask.apple-dns.net, AI",
+        "host, gspe1-ssl.ls.apple.com, AI",
+        "host-keyword, apple-relay, AI",
+        "host-suffix, mask.icloud.com, AI",
+        "host-suffix, mask-h2.icloud.com, AI",
+        "host, mask-api.icloud.com, AI",
+        "host, mask-api.fe.apple-dns.net, AI",
+        "host, mask-api.fe2.apple-dns.net, AI",
+        "host, mask-t.apple-dns.net, AI",
+        "host-suffix, mask.apple-dns.net, AI",
+        "host, gateway.icloud.com, AI",
+        "host-keyword, apple-intelligence, AI",
+        "host, seed.siri.apple.com, AI",
+        "host, seed-sequoia.siri.apple.com, AI",
+        "host, seed-swallow.siri.apple.com, AI",
+        "host, api-siri-prod.apple.com, AI",
+        "host-suffix, siri.apple.com, AI",
+        "host-suffix, siri.com, AI",
+        "host, probe.icloud.com, AI",
+        "host, metrics.icloud.com, AI",
+        "host, apple-carry-relay.cloudflare.com, AI",
+        "host, apple-relay.akamaized.net, AI"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/OpenAI/OpenAI.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/OpenAI/OpenAI.list",
+      "status": 200,
+      "bytes": 1495,
+      "sha256": "6ec16f5da986a15c62e80192f5b445dcdaf88607987923120761c1388eeb243d",
+      "rule_count": 35,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "ip-asn",
+        "ip-cidr"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Claude/Claude.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Claude/Claude.list",
+      "status": 200,
+      "bytes": 255,
+      "sha256": "bcf41ba79464a16d8305cf1c6f18c69d023ccd33ea1b84834daaa47cc0d5dfea",
+      "rule_count": 3,
+      "types": [
+        "host",
+        "host-suffix"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Gemini/Gemini.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Gemini/Gemini.list",
+      "status": 200,
+      "bytes": 664,
+      "sha256": "9e488fd027a55ec5bfeeeda1ab4a9022364c1d47dfd140293e02835d3303980f",
+      "rule_count": 13,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Copilot/Copilot.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Copilot/Copilot.list",
+      "status": 200,
+      "bytes": 2086,
+      "sha256": "b6bd07a9aaa109d44915b23b19d1d05948cc137dc7e2a5c3240d9a81c6e6b3a4",
+      "rule_count": 51,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "ip-asn",
+        "ip-cidr"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Netflix/Netflix.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Netflix/Netflix.list",
+      "status": 200,
+      "bytes": 37297,
+      "sha256": "eb95ba340fc9b3013e6b66a64270d20e4142b0f9b8cde1bac060725742331ec7",
+      "rule_count": 1158,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "host-wildcard",
+        "ip-cidr",
+        "ip6-cidr",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Disney/Disney.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Disney/Disney.list",
+      "status": 200,
+      "bytes": 6478,
+      "sha256": "f2682e12018f9019b2edae52ceee57cb1964d792ae4b3647c88b81f30fe41022",
+      "rule_count": 174,
+      "types": [
+        "host",
+        "host-suffix",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/YouTube/YouTube.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/YouTube/YouTube.list",
+      "status": 200,
+      "bytes": 6800,
+      "sha256": "6c011f1b2d03f664799bd8f01718bef9c8b071209d5602bfed18bb5db4a8c9e4",
+      "rule_count": 196,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "host-wildcard",
+        "ip-cidr",
+        "ip6-cidr",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Spotify/Spotify.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Spotify/Spotify.list",
+      "status": 200,
+      "bytes": 1355,
+      "sha256": "d29fa087d00317231e7de7c8cd4aa9ca91ed0c51660fbf76101b719d8ac5e78c",
+      "rule_count": 30,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "ip-cidr",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Bahamut/Bahamut.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Bahamut/Bahamut.list",
+      "status": 200,
+      "bytes": 433,
+      "sha256": "94b65206242b921f9f14a854bce1a427c921e58d4b4a8851813721fc60a9a5d0",
+      "rule_count": 8,
+      "types": [
+        "host",
+        "host-suffix",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Telegram/Telegram.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Telegram/Telegram.list",
+      "status": 200,
+      "bytes": 1494,
+      "sha256": "986f8e7d587ce42c3bb472e6a2e9cffd42a413240d32c02cc363c4d6367141fe",
+      "rule_count": 40,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "ip-asn",
+        "ip-cidr",
+        "ip6-cidr"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/GlobalMedia/GlobalMedia.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/GlobalMedia/GlobalMedia.list",
+      "status": 200,
+      "bytes": 88663,
+      "sha256": "3b0151ba6368818b30a8ded9c09311f1abdc3e8c5722bf4d43550988da7b1af7",
+      "rule_count": 2341,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "host-wildcard",
+        "ip-cidr",
+        "ip6-cidr",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Google/Google.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Google/Google.list",
+      "status": 200,
+      "bytes": 23684,
+      "sha256": "eb56706413fab41ded77194ae73f690af583bd56ad7d470273e026fa5ccb7b93",
+      "rule_count": 711,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "ip-cidr",
+        "ip6-cidr",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Apple/Apple.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Apple/Apple.list",
+      "status": 200,
+      "bytes": 67255,
+      "sha256": "966cb314803464ea516243104ed97aaa695d44da71f46b4c72bf8a14e7c67931",
+      "rule_count": 1880,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "host-wildcard",
+        "ip-cidr",
+        "ip6-cidr",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Microsoft/Microsoft.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Microsoft/Microsoft.list",
+      "status": 200,
+      "bytes": 27681,
+      "sha256": "7de40c9424a4a1ab793a38f58dbf64c25ef68f9e812618abf3751a853561c800",
+      "rule_count": 712,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "host-wildcard",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/AdvertisingLite/AdvertisingLite.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/AdvertisingLite/AdvertisingLite.list",
+      "status": 200,
+      "bytes": 1486832,
+      "sha256": "566865dfe8f72c1145567c05d0a72ab8111443f4cddc9a8d636e7cfa756b8e10",
+      "rule_count": 38066,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "ip-cidr",
+        "ip6-cidr"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/China/China.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/China/China.list",
+      "status": 200,
+      "bytes": 115682,
+      "sha256": "d1db36ac45b3615ee989cc2294e49559cf7d2c7e9826b00d716bc2cb436c09e1",
+      "rule_count": 3753,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "host-wildcard",
+        "ip-cidr",
+        "ip6-cidr",
+        "user-agent"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Proxy/Proxy.list",
+      "resolved_url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Proxy/Proxy.list",
+      "status": 200,
+      "bytes": 234131,
+      "sha256": "f6e94dc119718474a07eb17bbad9dc1c040ad5ddf3d963ef4fd264f680f9517c",
+      "rule_count": 7502,
+      "types": [
+        "host",
+        "host-keyword",
+        "host-suffix",
+        "ip-cidr",
+        "ip6-cidr",
+        "user-agent"
+      ]
+    }
+  ],
+  "domain_probes": [
+    {
+      "domain": "guzzoni.apple.com",
+      "expected": "AI",
+      "actual": "AI"
+    },
+    {
+      "domain": "seed.siri.apple.com",
+      "expected": "AI",
+      "actual": "AI"
+    },
+    {
+      "domain": "apple-relay.cloudflare.com",
+      "expected": "AI",
+      "actual": "AI"
+    },
+    {
+      "domain": "gateway.icloud.com",
+      "expected": "AI",
+      "actual": "AI"
+    },
+    {
+      "domain": "mask.icloud.com",
+      "expected": "AI",
+      "actual": "AI"
+    },
+    {
+      "domain": "metrics.icloud.com",
+      "expected": "AI",
+      "actual": "AI"
+    },
+    {
+      "domain": "chatgpt.com",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "api.openai.com",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "claude.ai",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "api.anthropic.com",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "gemini.google.com",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "aistudio.google.com",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "notebooklm.google.com",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "notebooklm.google",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "copilot.microsoft.com",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "api.perplexity.ai",
+      "expected": "AI服务",
+      "actual": "AI服务"
+    },
+    {
+      "domain": "www.netflix.com",
+      "expected": "Netflix",
+      "actual": "Netflix"
+    },
+    {
+      "domain": "www.disneyplus.com",
+      "expected": "Disney+",
+      "actual": "Disney+"
+    },
+    {
+      "domain": "www.youtube.com",
+      "expected": "YouTube",
+      "actual": "YouTube"
+    },
+    {
+      "domain": "i.ytimg.com",
+      "expected": "YouTube",
+      "actual": "YouTube"
+    },
+    {
+      "domain": "open.spotify.com",
+      "expected": "Spotify",
+      "actual": "Spotify"
+    },
+    {
+      "domain": "ani.gamer.com.tw",
+      "expected": "巴哈姆特",
+      "actual": "巴哈姆特"
+    },
+    {
+      "domain": "api.telegram.org",
+      "expected": "Telegram",
+      "actual": "Telegram"
+    },
+    {
+      "domain": "www.twitch.tv",
+      "expected": "流媒体",
+      "actual": "流媒体"
+    },
+    {
+      "domain": "www.apple.com",
+      "expected": "Apple",
+      "actual": "Apple"
+    },
+    {
+      "domain": "apps.apple.com",
+      "expected": "Apple",
+      "actual": "Apple"
+    },
+    {
+      "domain": "www.google.com",
+      "expected": "Google",
+      "actual": "Google"
+    },
+    {
+      "domain": "www.microsoft.com",
+      "expected": "Microsoft",
+      "actual": "Microsoft"
+    },
+    {
+      "domain": "www.baidu.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "www.bilibili.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "www.qq.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "router.local",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "routing-probe.invalid",
+      "expected": "兜底",
+      "actual": "兜底"
+    }
+  ],
+  "parser_check": {
+    "siri_rules": 32,
+    "fictional_ss_nodes": 2
+  },
+  "benchmark": {
+    "url": "https://cp.cloudflare.com/generate_204",
+    "method": "HEAD",
+    "status": 204,
+    "scope": "Current host connection only; no user nodes tested"
+  },
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/Orz-3/QuantumultX/master/Orz-3.conf",
+      "resolved_url": "https://raw.githubusercontent.com/Orz-3/QuantumultX/master/Orz-3.conf",
+      "status": 200,
+      "bytes": 7902,
+      "sha256": "9f934a4528ba47f620d8a81ce934f25d45ae3483f384f1eda57b790b9eb1ea54"
+    },
+    {
+      "url": "https://ddgksf2013.top/Profile/QuantumultX.conf",
+      "resolved_url": "https://ddgksf2013.top/Profile/QuantumultX.conf",
+      "status": 200,
+      "bytes": 27006,
+      "sha256": "741cb50aa2ad620384029d1eeb72ed0604742fe8ac87779c48f7990a4a00fd82"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/sample.conf",
+      "resolved_url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/sample.conf",
+      "status": 200,
+      "bytes": 42661,
+      "sha256": "60acd8eac964c012e6278791dc9e22b5ae2c950b04c5ae350eed795ea7d1234b"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/url-scheme.md",
+      "resolved_url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/url-scheme.md",
+      "status": 200,
+      "bytes": 7280,
+      "sha256": "4590d2df7877a3a1517c9f4bf72e9455d2b9ac59691bb4da446f4f34d227dc43"
+    }
+  ]
+}

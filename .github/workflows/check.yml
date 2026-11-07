@@ -1,0 +1,17 @@
+name: Validate public profile
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 3 * * *'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check syntax, Apple ICU regex, public sources and service routing
+        run: python3 -B validate.py --online --report online-report.json
