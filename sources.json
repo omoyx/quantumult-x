@@ -1,7 +1,7 @@
 {
-  "verified_at": "2026-11-07T18:11:08.207600+00:00",
+  "verified_at": "2026-11-07T18:45:12.975409+00:00",
   "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
-  "profile_sha256": "7a0b7edb21ffc31d6bafbdef775f3161b13d11ef0b49c982d9e1e5ef91c0c588",
+  "profile_sha256": "fbff95b5db3e01ff68d9a301beb821abefe6b8360f623416f77de92ad9073c8a",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js",
@@ -494,6 +494,7 @@
     "status": 204,
     "scope": "Current host connection only; no user nodes tested"
   },
+  "references_verified_at": "2026-11-07T18:11:08.207600+00:00",
   "references": [
     {
       "url": "https://raw.githubusercontent.com/Orz-3/QuantumultX/master/Orz-3.conf",
