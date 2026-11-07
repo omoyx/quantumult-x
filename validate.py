@@ -121,7 +121,8 @@ def check_parser(parser, siri, expected):
     if actual != expected:
         raise ValueError("KOP Siri conversion differs from the expected QX rules")
     return {"siri_rules": len(actual), "fictional_ss_nodes": parsed["nodes"],
-            "fictional_jms_renamed_tags": parsed["renamed_jms_tags"]}
+            "fictional_jms_renamed_tags": parsed["renamed_jms_tags"],
+            "fictional_jms_explicit_flag_tags": parsed["explicit_flag_tags"]}
 
 
 def online_check():

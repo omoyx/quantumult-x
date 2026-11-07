@@ -51,4 +51,16 @@ const renamedTags = renamed.split('\n').map(node => node.split('tag=')[1].trim()
 assert.deepEqual(renamedTags, numberedNames.map((name, index) =>
   `${['🇺🇸', '🇺🇸', '🇺🇸', '🇯🇵', '🇳🇱'][index]} ${name}`
 ));
-process.stdout.write(JSON.stringify({ siri, nodes: 2, renamed_jms_tags: renamedTags }));
+
+// Explicit flags also work without the automatic emoji parameter. This covers
+// the alternative for a device where renaming succeeds but flags are missing.
+const explicitFragment = '#rename=' + renamedTags.map((name, index) =>
+  `c123s${index + 1}@${encodeURIComponent(name)}`
+).join('+');
+const explicitOutput = parse('server', numbered, 'https://example.invalid/explicit-flag-fixture' + explicitFragment);
+const explicitNodes = explicitOutput.startsWith('shadowsocks=')
+  ? explicitOutput : Buffer.from(explicitOutput, 'base64').toString('utf8');
+const explicitTags = explicitNodes.split('\n').map(node => node.split('tag=')[1].trim());
+assert.deepEqual(explicitTags, renamedTags);
+process.stdout.write(JSON.stringify({ siri, nodes: 2, renamed_jms_tags: renamedTags,
+  explicit_flag_tags: explicitTags }));

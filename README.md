@@ -69,6 +69,14 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 
 [KOP 解析器源码](https://github.com/KOP-XIAO/QuantumultX/blob/master/Scripts/resource-parser.js)先按字面的 `+`、`@` 拆分，再解码名称字段。当前实现先重命名再添加国旗；头部关于 `rename`／`rrname` 顺序的旧说明与实现不一致，联网检查以实际解析输出为准。
 
+如果名称已正确更改但国旗没有显示，可把国旗直接写入新名称，并去掉 `emoji` 参数：
+
+```text
+#rename=c123s1@🇺🇸%20LA-1%20洛杉矶+c123s2@🇺🇸%20LA-2%20洛杉矶+c123s3@🇺🇸%20LA-GIA%20洛杉矶+c123s4@🇯🇵%20Osaka%20大阪+c123s5@🇳🇱%20NL%20荷兰
+```
+
+只替换节点资源路径原有的 `#...` 部分并更新该资源。此写法直接指定名称中的旗帜，不依赖自动地区识别。公开解析器的两种写法均已用虚构节点验证；用户实际使用时曾反馈自动写法名称已改但旗帜未显示，具体设备上的原因尚未定位。
+
 ## Siri 与规则更新
 
 沿用 [Shadowrocket-Siri 的 siri3.list](https://github.com/byx020119/Shadowrocket-Siri/blob/main/siri3.list) 和 `AI` 策略。保留 32 条 QX 原生本地快照，优先于普通 Apple、Google、国内 IP 规则；同一来源的远程规则继续接收新增。该来源也覆盖 Private Relay、Maps 和指标域名，这里保留兼容行为，不宣称这些域名都是 Siri 的最小必要集合。上游删除规则时，维护者需要同步本地快照；检查程序会提示差异。
