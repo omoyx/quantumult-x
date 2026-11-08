@@ -1,7 +1,7 @@
 {
-  "verified_at": "2026-11-07T20:15:46.219885+00:00",
+  "verified_at": "2026-11-08T15:24:07.252639+00:00",
   "scope": "Public files and domain routing model; no QX import, user subscription, node or unlock test.",
-  "profile_sha256": "286a5255c20084dfec610385880902a9414ff144e56e74224983c5f0c8dfbe74",
+  "profile_sha256": "4f4e499e30fd978fdc71d2a692dd115c10fd0ea41a62be7a898d32c0186bf985",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js",
@@ -17,11 +17,6 @@
       "bytes": 1213,
       "sha256": "0865283eb9d1d083a71f905d89820dc2f651246a6db27bb10ede333bb18bbca1",
       "rule_count": 32,
-      "types": [
-        "host",
-        "host-keyword",
-        "host-suffix"
-      ],
       "native_snapshot": [
         "host, guzzoni.apple.com, AI",
         "host-suffix, smoot.apple.com, AI",
@@ -55,7 +50,8 @@
         "host, metrics.icloud.com, AI",
         "host, apple-carry-relay.cloudflare.com, AI",
         "host, apple-relay.akamaized.net, AI"
-      ]
+      ],
+      "role": "reviewed compatibility upstream"
     },
     {
       "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/OpenAI/OpenAI.list",
@@ -587,8 +583,8 @@
     },
     {
       "domain": "gateway.icloud.com",
-      "expected": "AI",
-      "actual": "AI"
+      "expected": "direct",
+      "actual": "direct"
     },
     {
       "domain": "mask.icloud.com",
@@ -734,6 +730,75 @@
       "domain": "routing-probe.invalid",
       "expected": "兜底",
       "actual": "兜底"
+    },
+    {
+      "domain": "iosapps.itunes.apple.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "iosapps-ssl.itunes.apple.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "ussea3.icloud-content.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "edge-297.hkhkg2.icloud-content.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "edge-291.hkhkg2.icloud-content.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "cvws.icloud-content.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "routing-probe.icloud-content.com.cn",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "gcs-us-00003.content-storage-upload.googleapis.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "gcs-eu-00002.content-storage-upload.googleapis.com",
+      "expected": "direct",
+      "actual": "direct"
+    },
+    {
+      "domain": "googleapis.com",
+      "expected": "Google",
+      "actual": "Google"
+    },
+    {
+      "domain": "storage.googleapis.com",
+      "expected": "Google",
+      "actual": "Google"
+    }
+  ],
+  "managed_rules": [
+    {
+      "path": "rules/Custom.list",
+      "bytes": 2439,
+      "sha256": "12c814d39f8b9d5340af8fca493a85f7a9be6a516a49f48cb06017771b9064e3",
+      "origin": "working-tree"
+    },
+    {
+      "path": "rules/Custom-compat.list",
+      "bytes": 2416,
+      "sha256": "b46493c34f84f4361aed67384f2d9b7adee344c66c562e8c3ffd6f37d63cb2f2",
+      "origin": "working-tree"
     }
   ],
   "parser_check": {
@@ -781,36 +846,5 @@
     "method": "HEAD",
     "status": 204,
     "scope": "Current host connection only; no user nodes tested"
-  },
-  "references_verified_at": "2026-11-07T18:11:08.207600+00:00",
-  "references": [
-    {
-      "url": "https://raw.githubusercontent.com/Orz-3/QuantumultX/master/Orz-3.conf",
-      "resolved_url": "https://raw.githubusercontent.com/Orz-3/QuantumultX/master/Orz-3.conf",
-      "status": 200,
-      "bytes": 7902,
-      "sha256": "9f934a4528ba47f620d8a81ce934f25d45ae3483f384f1eda57b790b9eb1ea54"
-    },
-    {
-      "url": "https://ddgksf2013.top/Profile/QuantumultX.conf",
-      "resolved_url": "https://ddgksf2013.top/Profile/QuantumultX.conf",
-      "status": 200,
-      "bytes": 27006,
-      "sha256": "741cb50aa2ad620384029d1eeb72ed0604742fe8ac87779c48f7990a4a00fd82"
-    },
-    {
-      "url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/sample.conf",
-      "resolved_url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/sample.conf",
-      "status": 200,
-      "bytes": 42661,
-      "sha256": "60acd8eac964c012e6278791dc9e22b5ae2c950b04c5ae350eed795ea7d1234b"
-    },
-    {
-      "url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/url-scheme.md",
-      "resolved_url": "https://raw.githubusercontent.com/crossutility/Quantumult-X/master/url-scheme.md",
-      "status": 200,
-      "bytes": 7280,
-      "sha256": "4590d2df7877a3a1517c9f4bf72e9455d2b9ac59691bb4da446f4f34d227dc43"
-    }
-  ]
+  }
 }

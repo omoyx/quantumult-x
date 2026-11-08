@@ -7,7 +7,9 @@ import shutil
 import subprocess
 import sys
 import unittest
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
+
+from routing import CUSTOM_RESOURCE, CUSTOM_URL, ordered_rules, parse_rules, route
 
 
 ROOT = Path(__file__).resolve().parent
@@ -136,7 +138,11 @@ class QuantumultProfileTests(unittest.TestCase):
         for line in self.sections["filter_local"]:
             self.assertIn(fields(line)[-1], known, line)
         for _, opts in self.remote.values():
-            self.assertIn(opts["force-policy"], known)
+            if "force-policy" in opts:
+                self.assertIn(opts["force-policy"], known)
+        for filename in ("Custom.list", "Custom-compat.list"):
+            for _, _, policy in parse_rules((ROOT / "rules" / filename).read_text()):
+                self.assertIn(policy, known)
 
     def test_region_examples_from_multiple_providers_and_naming_styles(self):
         examples = REGION_EXAMPLES
@@ -177,41 +183,83 @@ class QuantumultProfileTests(unittest.TestCase):
         self.assertEqual(self.policies["AI"][1][0], "美国自动")
         self.assertTrue({"direct", "proxy", "reject"} <= set(self.policies["AI"][1]))
 
-    def test_siri_native_snapshot_is_complete_and_first(self):
+    def test_managed_siri_rules_preserve_compatibility_except_shared_gateway(self):
         source = next(source for source in self.receipt["sources"] if source["url"].endswith("/siri3.list"))
         snapshot = source["native_snapshot"]
         self.assertEqual(len(snapshot), 32)
-        self.assertEqual(self.sections["filter_local"][:len(snapshot)], snapshot)
-        self.assertEqual(self.remote["Siri-AI"][1]["force-policy"], "AI")
-        self.assertEqual(self.remote["Siri-AI"][1]["opt-parser"], "true")
-        def local_domain_action(domain):
-            for line in self.sections["filter_local"]:
-                parts = fields(line)
-                if len(parts) != 3:
-                    continue
-                kind, value, policy = parts
-                if ((kind == "host" and domain == value)
-                    or (kind == "host-suffix" and (domain == value or domain.endswith("." + value)))
-                    or (kind == "host-keyword" and value in domain)):
-                    return policy
-            return None
+        rules = parse_rules((ROOT / "rules/Custom.list").read_text())
         for rule in snapshot:
             kind, value, _ = fields(rule)
+            expected = "direct" if value == "gateway.icloud.com" else "AI"
+            self.assertIn((kind, value, expected), rules)
             domain = value if kind != "host-keyword" else value + ".example.com"
-            self.assertEqual(local_domain_action(domain), "AI", domain)
-        self.assertIsNone(local_domain_action("www.apple.com"))
-        self.assertEqual(local_domain_action("api.perplexity.ai"), "AI服务")
+            self.assertEqual(route(domain, rules, None), expected, domain)
+        self.assertIsNone(route("www.apple.com", rules, None))
+        self.assertEqual(route("api.perplexity.ai", rules, None), "AI服务")
+        self.assertFalse(any("AI" in line for line in self.sections["filter_local"]))
+
+    def test_addition_overrides_existing_local_gateway_and_google_rules(self):
+        snapshot = next(s["native_snapshot"] for s in self.receipt["sources"]
+                        if s["url"].endswith("/siri3.list"))
+        custom = parse_rules((ROOT / "rules/Custom.list").read_text())
+        google_url = "https://example.invalid/Google.list"
+        old = {"filter_local": snapshot + ["final, 兜底"], "filter_remote": [
+            CUSTOM_RESOURCE, google_url + ", force-policy=Google, inserted-resource=false"]}
+        supplied = {CUSTOM_URL: custom,
+                    google_url: [("host-suffix", "googleapis.com", "proxy")]}
+        rules, fallback = ordered_rules(old, supplied)
+        for domain, expected in {
+            "gateway.icloud.com": "direct", "seed.siri.apple.com": "AI",
+            "apple-relay.cloudflare.com": "AI", "api.perplexity.ai": "AI服务",
+            "gcs-us-00003.content-storage-upload.googleapis.com": "direct",
+            "storage.googleapis.com": "Google"}.items():
+            self.assertEqual(route(domain, rules, fallback), expected, domain)
+        old["filter_remote"][0] = CUSTOM_RESOURCE.replace("inserted-resource=true", "inserted-resource=false")
+        wrong_order, fallback = ordered_rules(old, supplied)
+        self.assertEqual(route("gateway.icloud.com", wrong_order, fallback), "AI")
+
+    def test_direct_exceptions_are_narrow_and_compat_only_changes_gateway(self):
+        primary = parse_rules((ROOT / "rules/Custom.list").read_text())
+        compat = parse_rules((ROOT / "rules/Custom-compat.list").read_text())
+        self.assertEqual(len(primary), len(set(primary)))
+        self.assertEqual(set(primary) - set(compat), {("host", "gateway.icloud.com", "direct")})
+        self.assertEqual(set(compat) - set(primary), {("host", "gateway.icloud.com", "AI")})
+        self.assertEqual(compat, [(kind, value, "AI" if value == "gateway.icloud.com" else policy)
+                                  for kind, value, policy in primary])
+        for domain in ("iosapps.itunes.apple.com", "ussea3.icloud-content.com",
+                       "edge-297.hkhkg2.icloud-content.com", "example.icloud-content.com.cn",
+                       "gcs-us-00003.content-storage-upload.googleapis.com"):
+            self.assertEqual(route(domain, primary, None), "direct")
+            self.assertEqual(route(domain, compat, None), "direct")
+        for domain in ("googleapis.com", "storage.googleapis.com", "www.icloud.com",
+                       "www.apple.com", "example.synology.me", "17.248.188.147",
+                       "content-storage-upload.googleapis.com.example.org"):
+            self.assertIsNone(route(domain, primary, None), domain)
+        self.assertTrue(all(kind in {"host", "host-suffix", "host-keyword"}
+                            for kind, _, _ in primary))
+
+    def test_install_links_only_add_filter_resources_with_mixed_policies(self):
+        readme = (ROOT / "README.md").read_text()
+        links = re.findall(r"\]\((https://quantumult.app/x/open-app/add-resource\?remote-resource=[^)]+)\)", readme)
+        self.assertEqual(len(links), 2)
+        for link, filename in zip(links, ("Custom.list", "Custom-compat.list")):
+            data = json.loads(parse_qs(urlsplit(link).query)["remote-resource"][0])
+            self.assertEqual(set(data), {"filter_remote"})
+            self.assertEqual(data["filter_remote"], [CUSTOM_RESOURCE.replace("Custom.list", filename)])
 
     def test_specific_services_precede_general_rules_and_cn_fallback(self):
         order = list(self.remote)
-        self.assertEqual(order[0], "Siri-AI")
-        for specific, general in (("Siri-AI", "Apple"), ("Gemini", "Google"),
+        self.assertEqual(order[0], "自定义分流")
+        self.assertEqual(self.remote["自定义分流"][0], CUSTOM_URL)
+        self.assertEqual(self.remote["自定义分流"][1]["opt-parser"], "false")
+        self.assertNotIn("force-policy", self.remote["自定义分流"][1])
+        for specific, general in (("自定义分流", "Apple"), ("Gemini", "Google"),
                                   ("YouTube", "Google"), ("Copilot", "Microsoft"),
                                   ("Netflix", "国际流媒体"), ("YouTube", "国际流媒体"),
                                   ("国际流媒体", "Apple")):
             self.assertLess(order.index(specific), order.index(general))
         for tag, (_, opts) in self.remote.items():
-            self.assertEqual(opts["inserted-resource"], "false", tag)
+            self.assertEqual(opts["inserted-resource"], "true" if tag == "自定义分流" else "false", tag)
         self.assertEqual(self.remote["Apple"][1]["force-policy"], "Apple")
         self.assertEqual(self.policies["Apple"][1][0], "direct")
         self.assertEqual(order[-1], "CN")
@@ -226,6 +274,9 @@ class QuantumultProfileTests(unittest.TestCase):
                         "ip-cidr", "ip6-cidr", "ip-asn", "user-agent"}
         for tag, (url, opts) in self.remote.items():
             if not url.startswith("https://"):
+                continue
+            if url == CUSTOM_URL:
+                self.assertEqual(opts["opt-parser"], "false")
                 continue
             with self.subTest(tag=tag):
                 source = checked[url]

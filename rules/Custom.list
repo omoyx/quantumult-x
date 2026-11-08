@@ -1,0 +1,57 @@
+# 自定义分流：内容传输直连，Siri/PCC 与通用 AI 分开选路。
+# QX 原生规则；需要现有 AI、AI服务 策略。不要设置 force-policy。
+# 以 inserted-resource=true 放在旧本地快照之前；关闭分流匹配优化。
+# 更新说明与一键添加：https://github.com/omoyx/quantumult-x#已有配置只添加分流
+# Apple 服务定义：https://support.apple.com/en-us/101555
+# GCS/CloudKit 上传实测：https://developer.apple.com/forums/thread/822534
+# Siri 兼容来源：https://github.com/byx020119/Shadowrocket-Siri/blob/main/siri3.list
+
+# 大体积内容；不扩展到整个 googleapis.com、icloud.com 或 Apple IP 网段。
+host, iosapps.itunes.apple.com, direct
+host, iosapps-ssl.itunes.apple.com, direct
+host-suffix, icloud-content.com, direct
+host-suffix, icloud-content.com.cn, direct
+host-suffix, content-storage-upload.googleapis.com, direct
+# CloudKit 共享网关不是 Siri 专用；若 Siri 实测异常，切换 Custom-compat.list。
+host, gateway.icloud.com, direct
+
+# 保留既有 Siri/PCC 兼容域名，单独排除上面的共享网关。
+host, guzzoni.apple.com, AI
+host-suffix, smoot.apple.com, AI
+host, apple-relay.apple.com, AI
+host-suffix, apple-relay.apple.com, AI
+host, apple-relay.cloudflare.com, AI
+host-suffix, apple-relay.cloudflare.com, AI
+host, apple-relay.fastly-edge.com, AI
+host-suffix, apple-relay.fastly-edge.com, AI
+host, cp4.cloudflare.com, AI
+host, apple-relay.mask.apple-dns.net, AI
+host-suffix, apple-relay.mask.apple-dns.net, AI
+host, gspe1-ssl.ls.apple.com, AI
+host-keyword, apple-relay, AI
+host-suffix, mask.icloud.com, AI
+host-suffix, mask-h2.icloud.com, AI
+host, mask-api.icloud.com, AI
+host, mask-api.fe.apple-dns.net, AI
+host, mask-api.fe2.apple-dns.net, AI
+host, mask-t.apple-dns.net, AI
+host-suffix, mask.apple-dns.net, AI
+host-keyword, apple-intelligence, AI
+host, seed.siri.apple.com, AI
+host, seed-sequoia.siri.apple.com, AI
+host, seed-swallow.siri.apple.com, AI
+host, api-siri-prod.apple.com, AI
+host-suffix, siri.apple.com, AI
+host-suffix, siri.com, AI
+host, probe.icloud.com, AI
+host, metrics.icloud.com, AI
+host, apple-carry-relay.cloudflare.com, AI
+host, apple-relay.akamaized.net, AI
+
+# 通用 AI 补充。
+host, aistudio.google.com, AI服务
+host-suffix, notebooklm.google.com, AI服务
+host-suffix, notebooklm.google, AI服务
+host-suffix, perplexity.ai, AI服务
+host-suffix, perplexity.com, AI服务
+host-suffix, pplx.ai, AI服务

@@ -1,10 +1,45 @@
 # Quantumult X：订阅与配置分开维护
 
-通过「下载配置」保存为本地配置，再在圈 X 内添加自己的机场订阅。按地区跨机场自动测速，并为 Siri / Apple Intelligence、通用 AI、流媒体和常用服务提供独立策略。
+本地主配置维护节点、地区策略与 DNS；远程分流维护网站该走哪个策略。已有配置只需添加下面的自定义分流，之后随远程资源更新，不再整份替换配置。
 
-**请选择「配置文件 → 下载配置」。把 GitHub 链接用于「新建关联」会变成只读的远程托管配置，无法添加自己的订阅。** 本地配置内引用的远程分流规则仍会独立更新。
+## 已有配置只添加分流
 
-**主配置地址：**
+[一键添加自定义分流](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%5B%22https%3A%2F%2Fraw.githubusercontent.com%2Fomoyx%2Fquantumult-x%2Fmain%2Frules%2FCustom.list%2C%20tag%3D%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E6%B5%81%2C%20update-interval%3D86400%2C%20opt-parser%3Dfalse%2C%20inserted-resource%3Dtrue%2C%20enabled%3Dtrue%22%5D%7D)
+
+该链接使用 QX 官方 `add-resource`，只增加一条 `filter_remote`，保留已有订阅和配置。若没有唤起圈 X，可复制以下地址到「分流 → 引用／远程资源」新增：
+
+```text
+https://raw.githubusercontent.com/omoyx/quantumult-x/main/rules/Custom.list
+```
+
+首次添加后核对这三项：
+
+1. 将「自定义分流」放到远程分流首位，开启「插入资源」，关闭该资源的「资源解析」。
+2. **保留文件内的策略，不为整个资源指定统一策略。** 此列表混合使用 `direct`、`AI`、`AI服务`，适配本仓库此前的主配置；如果使用其他配置，应先确认存在 `AI`、`AI服务` 这两个同名策略。
+3. 使用「分流」模式，关闭「其他设置 → 分流匹配优化」，刷新该资源。自动更新间隔为 86400 秒；可手动刷新以立即接收修复。
+
+若偏好编辑本地配置，只在 `[filter_remote]` 最上方添加这一行即可，其他段落保留：
+
+```ini
+https://raw.githubusercontent.com/omoyx/quantumult-x/main/rules/Custom.list, tag=自定义分流, update-interval=86400, opt-parser=false, inserted-resource=true, enabled=true
+```
+
+### 本次内容传输调整
+
+- App Store 的 `iosapps` 下载端点、`icloud-content.com`／`.com.cn` 内容传输直接走 `direct`。
+- `content-storage-upload.googleapis.com` 这一窄存储域名族走 `direct`，避免被 Google 通配规则送进代理；其他 Google API 保持原策略。它有 CloudKit 资产上传的公开实测旁证，仍需验证使用地的直连可达性。
+- `gateway.icloud.com` 共享 CloudKit 网关走 `direct`。其余既有 Siri／PCC 兼容域名继续走 `AI`，通用 AI 补充走 `AI服务`。
+- 不新增 Apple 整个 IP 网段的直连覆盖，不将所有 `icloud.com` 或第三方云存储整体直连。私人 NAS 域名仅在自己的本地分流里设为 `direct`，不要写入本公开仓库，也不要直连整个公共 DDNS 后缀。
+
+`inserted-resource=true` 使这份规则先于旧本地 Siri 快照生效，因此旧的 `gateway.icloud.com → AI` 无需手动删除。新主配置不再复制自定义域名的本地快照。已有配置的旧规则可作为停用本资源后的回退；今后取消旧域名策略时，维护者必须发布明确覆盖，不能仅从远程列表删掉旧条目。
+
+**Siri 实机验收与回退：** 更新后试一次原来可用的 Siri／Apple Intelligence 请求，同时确认内容上传正常。本仓库检查不能证明设备功能和直连链路已经通过。若共享网关直连后出现功能回退，可直接编辑此资源 URL，把 `Custom.list` 改为 `Custom-compat.list` 并刷新；兼容版仅将共享网关恢复到 `AI`，其他内容直连不变。也可先停用原资源，再[添加兼容版](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%5B%22https%3A%2F%2Fraw.githubusercontent.com%2Fomoyx%2Fquantumult-x%2Fmain%2Frules%2FCustom-compat.list%2C%20tag%3D%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E6%B5%81%2C%20update-interval%3D86400%2C%20opt-parser%3Dfalse%2C%20inserted-resource%3Dtrue%2C%20enabled%3Dtrue%22%5D%7D)，两版不要同时启用。
+
+以后调整网站分流只更新此列表，机场订阅继续自行更新；地区策略结构、图标与 DNS 的改动仍属于本地主配置。远程分流不能替你创建新策略组。
+
+## 全新安装的主配置
+
+已有用户无需再次导入这个文件。只有第一次建立完整策略和地区组时，才通过「配置文件 → 下载配置」保存为本地配置，随后自行添加机场订阅。GitHub URL 的「新建关联」属于只读远程托管，无法在其中添加自己的订阅。
 
 ```text
 https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
@@ -13,7 +48,7 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 ## 第一次使用
 
 1. 保存现有可用配置，记下 `AI` 策略当前使用的有效出口。
-2. 点右下角风车，在「配置文件」区域选择「下载配置」，粘贴上面的链接并保存，使用可编辑的本地配置。该操作会覆盖当前配置，先完成上一步备份。然后在「节点 → 节点资源／引用」中添加 JMS、奶昔或其他订阅。优先使用机场的 QX 格式；其他受支持的格式可开启该资源的「资源解析」，使用模板内的 KOP-XIAO 解析器。**订阅只填在圈 X 内。**
+2. 点右下角风车，在「配置文件」区域选择「下载配置」，粘贴上面的 `QuantumultX.conf` 链接并保存，使用可编辑的本地配置。该操作会覆盖当前配置，先完成上一步备份。然后在「节点 → 节点资源／引用」中添加 JMS、奶昔或其他订阅。优先使用机场的 QX 格式；其他受支持的格式可开启该资源的「资源解析」，使用模板内的 KOP-XIAO 解析器。**订阅只填在圈 X 内。**
 3. 切到「分流」模式，在「其他设置」关闭「分流匹配优化」，更新节点和规则，执行一次节点延时测试。
 4. 确认 `AI` 仍选原先有效的出口，并且目标地区组确实有节点，再试 Siri / Apple Intelligence。美国是新模板默认值，不代表任何特定节点一定可用。
 
@@ -107,11 +142,11 @@ https://raw.githubusercontent.com/omoyx/quantumult-x/main/QuantumultX.conf
 
 ## Siri 与规则更新
 
-沿用 [Shadowrocket-Siri 的 siri3.list](https://github.com/byx020119/Shadowrocket-Siri/blob/main/siri3.list) 和 `AI` 策略。保留 32 条 QX 原生本地快照，优先于普通 Apple、Google、国内 IP 规则；同一来源的远程规则继续接收新增。该来源也覆盖 Private Relay、Maps 和指标域名，这里保留兼容行为，不宣称这些域名都是 Siri 的最小必要集合。上游删除规则时，维护者需要同步本地快照；检查程序会提示差异。
+在自定义远程列表中维护 [Shadowrocket-Siri 的 siri3.list](https://github.com/byx020119/Shadowrocket-Siri/blob/main/siri3.list) 的兼容域名：共享网关单独直连，其余 31 条保留 `AI`，优先于普通 Apple、Google 和国内 IP 规则。该来源也覆盖 Private Relay、Maps 和指标域名，不宣称这些都是 Siri 的最小必要集合。上游增删会使检查失败，维护者审阅后再发布；不将未经审阅的社区修改直接覆盖到用户设备。兼容版仅让共享网关恢复 `AI`。
 
 常用服务使用 blackmatrix7 的 QX 原生规则，每 24 小时更新。专用服务在前，通用服务和国内兜底在后。重写、任务、后端和 MITM 均为空；广告规则预置为关闭。
 
-**固定链接用于首次「下载配置」到本地，主配置升级不会无损自动合并。** 节点订阅和远程分流各自更新。若重新覆盖导入主配置，先保留自己在圈 X 内添加的订阅；[QX 官方 URL Scheme](https://github.com/crossutility/Quantumult-X/blob/master/url-scheme.md)区分「添加资源」与「替换配置／资源」，二者不能混用。不要把带私人订阅的导出配置提交到本仓库。
+**`rules/Custom.list` 是日常规则订阅；`QuantumultX.conf` 只用于首次建立本地配置，主配置升级不会无损自动合并。** 节点订阅和远程分流各自更新。若重新覆盖导入主配置，先保留自己在圈 X 内添加的订阅；[QX 官方 URL Scheme](https://github.com/crossutility/Quantumult-X/blob/master/url-scheme.md)区分「添加资源」与「替换配置／资源」，二者不能混用。不要把带私人订阅的导出配置提交到本仓库。
 
 ## 验证与维护
 
@@ -127,9 +162,11 @@ python3 -B validate.py
 python3 -B validate.py --online --report online-report.json
 ```
 
+发布后可用 `python3 -B validate.py --online --published --report online-report.json` 同时核对两份在线自定义规则与规范源一致。通常的 `--online` 使用工作区中的自定义列表，以支持发布前和 PR 检查。
+
 联网检查需要 Node.js；macOS 上还会用系统 Swift / Foundation 验证 ICU 正则。GitHub Actions 在每次变更和每天运行上述检查，不需要机场订阅。
 
-本仓库检查配置结构、策略引用、63 个节点名称样例、公开资源完整性、Siri 快照以及典型域名的顺序匹配。域名模型不模拟 QX 的 DNS、ASN、HTTPS User-Agent 可见性或实际出口。用户已实测反馈 GitHub 远程关联无法添加订阅，因此使用方式已明确为下载到本地。**尚未完成本地配置添加订阅、用户节点连通性和服务解锁验收。** 确认本地导入无误、节点入组、实际请求规则与出口正确之后，才能判断特定网络的日常可用性。
+本仓库检查配置结构、策略引用、63 个节点名称样例、公开资源完整性、Siri 兼容域名、内容直连、旧本地规则覆盖和一键添加链接，以及典型域名的顺序匹配。域名模型不模拟 QX 的 DNS、ASN、HTTPS User-Agent 可见性或实际出口。用户已实测反馈 GitHub 远程关联无法添加订阅，因此使用方式已明确为下载到本地。**尚未完成本地配置添加订阅、用户节点连通性和服务解锁验收。** 确认本地导入无误、节点入组、实际请求规则与出口正确之后，才能判断特定网络的日常可用性。
 
 ## 参考来源
 
@@ -147,4 +184,4 @@ python3 -B validate.py --online --report online-report.json
 | [lige47 / lige_icon](https://github.com/lige47/lige_icon) | Apple Intelligence、青绿色 Disney+、渐变 Google G；远程引用固定提交并注明出处 |
 | [byx020119/Shadowrocket-Siri](https://github.com/byx020119/Shadowrocket-Siri) | Siri / Apple Intelligence 兼容规则 |
 
-来源保持各自的许可与署名；本仓库没有复制社区整份配置、重写脚本或证书。公开源校验快照见 [sources.json](sources.json)。
+来源保持各自的许可与署名；本仓库没有复制社区整份配置、重写脚本或证书。内容端点参考 [Apple 网络要求](https://support.apple.com/en-us/101555)及 [CloudKit 上传实测](https://developer.apple.com/forums/thread/822534)。公开源校验快照见 [sources.json](sources.json)。

@@ -1,14 +1,12 @@
 """Validate only this public profile and its public upstreams; stdlib only.
 
-Domain probes model sequential, local-first matching with the final rule last.
+Domain probes model sequential matching with inserted resources before local rules.
 They do not implement QX DNS, request optimization, ASN lookup or HTTPS inspection.
 """
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
-import fnmatch
 import hashlib
-import ipaddress
 import json
 from pathlib import Path
 import shutil
@@ -18,6 +16,7 @@ import sys
 from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
 from test_profile import PROFILE, fields, options, read_sections, validate_probe_url
+from routing import CUSTOM_URL, ordered_rules, parse_rules, route
 
 ROOT = Path(__file__).resolve().parent
 SIRI = "https://raw.githubusercontent.com/byx020119/Shadowrocket-Siri/main/siri3.list"
@@ -26,14 +25,10 @@ ICON_PREFIXES = (
     "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/",
     "https://raw.githubusercontent.com/lige47/lige_icon/e28d76ff1fe63c693949f6937545ccbc86ca3c22/icon/",
 )
-RULE_TYPES = {"host", "host-suffix", "host-keyword", "host-wildcard",
-              "ip-cidr", "ip6-cidr", "ip-asn", "user-agent"}
-SIRI_TYPES = {"domain": "host", "domain-suffix": "host-suffix",
-              "domain-keyword": "host-keyword"}
 # Expected policy names, not claims about unlock or actual egress.
 PROBES = {
     "guzzoni.apple.com": "AI", "seed.siri.apple.com": "AI",
-    "apple-relay.cloudflare.com": "AI", "gateway.icloud.com": "AI",
+    "apple-relay.cloudflare.com": "AI", "gateway.icloud.com": "direct",
     "mask.icloud.com": "AI", "metrics.icloud.com": "AI",
     "chatgpt.com": "AI服务", "api.openai.com": "AI服务",
     "claude.ai": "AI服务", "api.anthropic.com": "AI服务",
@@ -49,43 +44,14 @@ PROBES = {
     "www.baidu.com": "direct", "www.bilibili.com": "direct",
     "www.qq.com": "direct", "router.local": "direct",
     "routing-probe.invalid": "兜底",
+    "iosapps.itunes.apple.com": "direct", "iosapps-ssl.itunes.apple.com": "direct",
+    "ussea3.icloud-content.com": "direct", "edge-297.hkhkg2.icloud-content.com": "direct",
+    "edge-291.hkhkg2.icloud-content.com": "direct", "cvws.icloud-content.com": "direct",
+    "routing-probe.icloud-content.com.cn": "direct",
+    "gcs-us-00003.content-storage-upload.googleapis.com": "direct",
+    "gcs-eu-00002.content-storage-upload.googleapis.com": "direct",
+    "googleapis.com": "Google", "storage.googleapis.com": "Google",
 }
-
-
-def active_lines(content):
-    for line in content.splitlines():
-        line = line.strip()
-        if line and not line.startswith(("#", ";", "//")):
-            yield line
-
-
-def parse_rules(content, siri=False):
-    rules = []
-    for line in active_lines(content):
-        parts = fields(line)
-        kind = parts[0].lower()
-        if siri:
-            if len(parts) != 2 or kind not in SIRI_TYPES:
-                raise ValueError(f"Unexpected Siri rule: {line}")
-            parts = [SIRI_TYPES[kind], parts[1], "AI"]
-        else:
-            if len(parts) < 3 or kind not in RULE_TYPES:
-                raise ValueError(f"Invalid native QX rule: {line}")
-            parts[0] = kind
-            if parts[3:] and any(p not in {"no-resolve"} for p in parts[3:]):
-                raise ValueError(f"Unknown QX rule option: {line}")
-        kind, value, policy = parts[:3]
-        if not value or not policy:
-            raise ValueError("Empty rule value or policy")
-        if kind in {"ip-cidr", "ip6-cidr"}:
-            ipaddress.ip_network(value, strict=False)
-        elif kind == "ip-asn":
-            if not value.isdecimal():
-                raise ValueError("Invalid ASN")
-        rules.append((kind, value, policy))
-    if not rules:
-        raise ValueError("Empty ruleset")
-    return rules
 
 
 def fetch(url):
@@ -96,21 +62,6 @@ def fetch(url):
         return content, {"url": url, "resolved_url": response.url,
                          "status": response.status, "bytes": len(content),
                          "sha256": hashlib.sha256(content).hexdigest()}
-
-
-def domain_matches(kind, value, domain):
-    value, domain = value.lower(), domain.lower()
-    return ((kind == "host" and domain == value)
-            or (kind == "host-suffix" and (domain == value or domain.endswith("." + value)))
-            or (kind == "host-keyword" and value in domain)
-            or (kind == "host-wildcard" and fnmatch.fnmatchcase(domain, value)))
-
-
-def route(domain, rules, fallback):
-    for kind, value, policy in rules:
-        if domain_matches(kind, value, domain):
-            return policy
-    return fallback
 
 
 def check_parser(parser, siri, expected):
@@ -134,7 +85,7 @@ def check_parser(parser, siri, expected):
             "download_connection_fields_unchanged": parsed["download_connection_fields_unchanged"]}
 
 
-def online_check():
+def online_check(published=False):
     sections = read_sections()
     resources = []
     for line in sections["filter_remote"]:
@@ -148,7 +99,10 @@ def online_check():
         if not url or not url.startswith(ICON_PREFIXES):
             raise ValueError(f"Missing or unexpected policy icon for {name}")
         icons.append((name, url))
-    urls = list(dict.fromkeys([PARSER] + [url for url, _ in resources] + [url for _, url in icons]))
+    urls = list(dict.fromkeys([PARSER, SIRI] + [url for url, _ in resources if url != CUSTOM_URL]
+                             + [url for _, url in icons]))
+    if published:
+        urls.extend([CUSTOM_URL, CUSTOM_URL.replace("Custom.list", "Custom-compat.list")])
     with ThreadPoolExecutor(max_workers=6) as pool:
         fetched = dict(zip(urls, pool.map(fetch, urls)))
     receipt = {"verified_at": datetime.now(timezone.utc).isoformat(),
@@ -163,32 +117,43 @@ def online_check():
         if width != height or not 32 <= width <= 2048:
             raise ValueError(f"Unexpected policy icon dimensions: {name}")
         receipt["policy_icons"].append(dict(source, policy=name, width=width, height=height))
-    local = []
-    fallback = None
-    for line in sections["filter_local"]:
-        parts = fields(line)
-        if parts[0] == "final":
-            fallback = parts[1]
-        else:
-            local.append(tuple(parts[:3]))
-    ordered = list(local)
-    siri_rules = None
+    siri_rules = parse_rules(fetched[SIRI][0].decode("utf-8-sig"), siri=True)
+    snapshot = [", ".join(rule) for rule in siri_rules]
+    siri_source = dict(fetched[SIRI][1], rule_count=len(siri_rules),
+                       native_snapshot=snapshot, role="reviewed compatibility upstream")
     receipt["sources"].append(fetched[PARSER][1])
+    receipt["sources"].append(siri_source)
+    receipt["managed_rules"] = []
+    for filename in ("Custom.list", "Custom-compat.list"):
+        content = (ROOT / "rules" / filename).read_bytes()
+        source = {"path": "rules/" + filename, "bytes": len(content),
+                  "sha256": hashlib.sha256(content).hexdigest(), "origin": "working-tree"}
+        if published:
+            url = CUSTOM_URL.replace("Custom.list", filename)
+            if fetched[url][0] != content:
+                raise ValueError(f"Published managed rules differ: {filename}")
+            source.update(fetched[url][1], origin="published-and-compared")
+        receipt["managed_rules"].append(source)
+    custom = parse_rules((ROOT / "rules/Custom.list").read_text())
+    for kind, value, policy in siri_rules:
+        expected = (kind, value, "direct" if value == "gateway.icloud.com" else policy)
+        if expected not in custom:
+            raise ValueError(f"Upstream Siri changed: review managed rules for {value}")
+    expected_keys = {(kind, value) for kind, value, _ in siri_rules}
+    actual_keys = {(kind, value) for kind, value, policy in custom if policy == "AI"}
+    actual_keys.add(("host", "gateway.icloud.com"))
+    if actual_keys != expected_keys:
+        raise ValueError("Upstream Siri removed or changed a rule: review managed rules")
+    remote_rules = {CUSTOM_URL: custom}
     for url, opts in resources:
+        if url == CUSTOM_URL:
+            continue
         content, source = fetched[url]
-        rules = parse_rules(content.decode("utf-8-sig"), siri=url == SIRI)
+        rules = parse_rules(content.decode("utf-8-sig"))
         source.update(rule_count=len(rules), types=sorted({r[0] for r in rules}))
-        if url == SIRI:
-            siri_rules = rules
-            snapshot = [", ".join(r) for r in rules]
-            source["native_snapshot"] = snapshot
-            if list(active_lines("\n".join(sections["filter_local"])))[:len(snapshot)] != snapshot:
-                raise ValueError("Upstream Siri changed: review and sync the local snapshot before release")
         receipt["sources"].append(source)
-        if opts.get("enabled") == "true":
-            if opts.get("inserted-resource") != "false":
-                raise ValueError("Domain model requires local-first ordering")
-            ordered.extend((kind, value, opts["force-policy"]) for kind, value, _ in rules)
+        remote_rules[url] = rules
+    ordered, fallback = ordered_rules(sections, remote_rules)
     for domain, expected in PROBES.items():
         actual = route(domain, ordered, fallback)
         receipt["domain_probes"].append({"domain": domain, "expected": expected, "actual": actual})
@@ -211,18 +176,19 @@ def online_check():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--online", action="store_true", help="Fetch public upstreams and test domain routing")
+    parser.add_argument("--published", action="store_true", help="Also compare published managed rules to local files")
     parser.add_argument("--report", type=Path, help="Write public validation evidence as JSON")
     args = parser.parse_args()
     subprocess.run([sys.executable, "-B", "-m", "unittest", "discover", "-s", str(ROOT),
                     "-p", "test_profile.py", "-v"], check=True)
     if args.online:
-        receipt = online_check()
+        receipt = online_check(published=args.published)
         if args.report:
             args.report.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n")
         print(f"PASS: {len(receipt['sources'])} public sources; {len(receipt['policy_icons'])} policy PNGs; "
               f"{len(PROBES)} domain probes; KOP parser; HEAD 204")
-    elif args.report:
-        parser.error("--report requires --online")
+    elif args.report or args.published:
+        parser.error("--report and --published require --online")
 
 
 if __name__ == "__main__":
